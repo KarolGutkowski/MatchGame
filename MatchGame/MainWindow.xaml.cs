@@ -47,6 +47,7 @@ namespace MatchGame
 
         private void SetUpGame()
         {
+            
             List<string> Emojis = new List<string>()
             {
                 "🍇", "🍇",
@@ -56,20 +57,65 @@ namespace MatchGame
                 "🍌", "🍌",
                 "🥑", "🥑",
                 "🍆", "🍆",
-                "🥦", "🥦"
+                "🥦", "🥦",
+                "🎶", "🎶",
+                "🤡", "🤡",
+                "💩", "💩",
+                "👽", "👽",
+                "👻", "👻",
+                "🙈", "🙈",
+                "🦒", "🦒",
+                "🐭", "🐭",
+                "🐼", "🐼",
+                "🐴", "🐴",
+                "🐽", "🐽",
+                "🐾", "🐾",
+                "🐒", "🐒",
+                "👌" ,"👌",
+                "🤌", "🤌",
+                "🎖" ,"🎖"
             };
+            
             Random random = new Random();
+            int n = mainGrid.Children.OfType<TextBlock>().Where(x => x.Name != "Test").Count();
+            /*
+            for(int i=0;i<n;i++)
+            {
+                TextBlock textBlock = mainGrid.Children.OfType<TextBlock>().Where(x => x.Name != "Test").ElementAt(i);
+                textBlock.Visibility = Visibility.Visible;
+                textBlock.Text = "T";
+            }
+            */
+            List<string> EmojisCopy = new List<string>(Emojis);
+            while (EmojisCopy.Count>n)
+            {
+                int i = random.Next(EmojisCopy.Count);
+                EmojisCopy.RemoveAt(i);
+                if (i % 2 == 0)
+                {
+                    EmojisCopy.RemoveAt(i);
+                }
+                else
+                {
+                    EmojisCopy.RemoveAt(i-1);
+                } 
+            }
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
             {
+                
                 if (textBlock.Name != "Test")
                 {
                     textBlock.Visibility = Visibility.Visible;
-                    int index = random.Next(Emojis.Count);
-                    string nextEmoji = Emojis[index];
+                    int index = random.Next(EmojisCopy.Count);
+                    string nextEmoji = EmojisCopy[index];
                     textBlock.Text = nextEmoji;
-                    Emojis.RemoveAt(index);
+                    EmojisCopy.RemoveAt(index);
                 }
+                
+                
+                //textBlock.Text = Emojis.Count.ToString();
             }
+            //mainGrid.Children.OfType<TextBlock>().Where(x => x.Name != "Test").First().Text = "gay";
             tenthsOfSecondsElapsed = 0;
             matched= 0;
         }
